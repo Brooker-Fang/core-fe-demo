@@ -1,17 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import {async, bootstrap} from "core-fe";
+import {ErrorHandler} from "./module/ErrorHandler";
+import ReactDOM from 'react-dom'
+import App from './App'
+// import {Home} from './module/home/index'
+const Home = async(() => import(/* webpackChunkName: "Home" */ "./module/home"), "Home");
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+bootstrap({
+  componentType: Home,
+  errorListener: new ErrorHandler(),
+});
+// ReactDOM.render(
+//   <App >
+//   </App>,
+//   document.getElementById('root')
+// )
