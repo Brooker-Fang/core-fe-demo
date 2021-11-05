@@ -1,10 +1,4 @@
-export interface User{
-    _id: string
+export interface UserResponse{
     name: string
-    email: string
-    role: number
-  }
-  export interface Jwt {
-    token: string
-    user: User
+    password: string
   }

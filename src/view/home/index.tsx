@@ -3,12 +3,10 @@ import MainComponent from "./components/Home";
 import {RootState} from "../../type/state";
 class HomeModule extends Module<RootState, "home"> {
   *onEnter(){
-    console.info(1)
+    console.info('enter')
   }
 }
 
-const module = register(new HomeModule("home", {
- 
-}));
+const view = register(new HomeModule("home", {}));
 
-export const Home = module.attachLifecycle(MainComponent);
+export const Home = view.attachLifecycle(MainComponent);
