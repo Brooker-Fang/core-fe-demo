@@ -1,4 +1,4 @@
-import {Module, register} from "core-fe";
+import {Module, register} from "core-fe/src/index";
 import MainComponent from "./components/Home";
 import {RootState} from "../../type/state";
 class HomeModule extends Module<RootState, "home"> {

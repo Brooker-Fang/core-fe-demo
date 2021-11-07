@@ -6,3 +6,4 @@ export interface RootState extends State {
         user: UserState
     };
 }
+

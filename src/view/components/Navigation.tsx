@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 import { MailOutlined, AppstoreOutlined } from '@ant-design/icons'
 import { RootState } from '../../type/state'
 import { connect } from 'react-redux'
-import { UserState } from '../user/type'
-import {actions as userActions} from "../user";
+import { userActions } from "../user";
+import { Dispatch } from 'redux'
 interface Props {
   user: UserState
 } 
@@ -44,8 +44,8 @@ const mapStateToProps = (state: RootState) => {
   }
 }
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  logout: () => {
-      dispatch(userActions.logout());
+  register: () => {
+      dispatch(userActions.register());
   },
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation)

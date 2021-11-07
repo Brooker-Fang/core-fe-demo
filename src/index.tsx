@@ -14,3 +14,6 @@ bootstrap({
 //   </App>,
 //   document.getElementById('root')
 // )
+// bootstrap, Module, async, ajax, uri, register
+// Loading, Interval, Mutex, RetryOnNetworkConnectionError
+// register, logger
