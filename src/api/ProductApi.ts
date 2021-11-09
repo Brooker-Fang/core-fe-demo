@@ -1,12 +1,13 @@
 import { ajax } from 'core-fe'
-import { Product, ProductCreate, ProductListResponse } from '../type/api';
+import { ProductCreate, ProductListResponse, ProductListRequest } from '../type/api';
+import { Product } from '../view/product/type';
 
 export class ProductApi {
-  static list(): Promise<ProductListResponse> {
+  static list(request: ProductListRequest): Promise<ProductListResponse> {
     return ajax("GET", "/ajax/product", {}, null);
   }
-  static create(): Promise<ProductCreate> {
-      return ajax("GET", "/ajax/product/create", {}, null);
+  static create(request: Product): Promise<ProductCreate> {
+      return ajax("GET", "/ajax/product/create", request, null);
   }
   static get(id: string): Promise<Product> {
     return ajax("GET", "/ajax/product/:id", {id}, null);
