@@ -1,11 +1,5 @@
-export interface State {
+export interface UserState {
   currentUser: {
-      loggedIn: boolean;
-      role: string | null;
-      name: string | null;
-  };
-  login: {
-      success: boolean;
-      errorMessage: string | null;
+      name: string;
   };
 }

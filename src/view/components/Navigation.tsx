@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 import { MailOutlined, AppstoreOutlined } from '@ant-design/icons'
 import { RootState } from '../../type/state'
 import { connect } from 'react-redux'
-import { userActions } from "../user";
 import { Dispatch } from 'redux'
+import { UserState } from '../user/type'
 interface Props {
   user: UserState
 } 
@@ -23,29 +23,18 @@ const Navigation: React.FunctionComponent<Props> = ({user}: Props) => {
           <Menu.Item key="login" icon={<MailOutlined />}>
             <Link to="/login">登录</Link>
           </Menu.Item>
-          <Menu.Item key="register" icon={<AppstoreOutlined />}>
-            <Link to="/register">注册</Link>
-          </Menu.Item>
         </>
       )}
       {
-        user && (
-          <Menu.Item >
-            <Link to="/signin">dashboard</Link>
-          </Menu.Item>
-        )
+        "欢迎" + user.currentUser?.name
       }
     </Menu>
   )
 }
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (state: RootState):Props => {
   return {
-    user: state.app.user.currentUser
+    user: state.app.user
   }
 }
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  register: () => {
-      dispatch(userActions.register());
-  },
-});
+const mapDispatchToProps = (dispatch: Dispatch) => ({});
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation)

@@ -9,4 +9,7 @@ export class UserApi {
     static login(request: UserRequest): Promise<UserResponse> {
         return ajax("PUT", "/ajax/login", {}, request);
     }
+    static register(request: UserRequest): Promise<UserResponse> {
+        return ajax("PUT", "/ajax/register", {}, request);
+    }
 }

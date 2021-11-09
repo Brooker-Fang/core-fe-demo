@@ -1,23 +1,24 @@
-import { call, Module, register, SagaGenerator } from "core-fe";
+import { call, Log, Module, register, SagaGenerator } from "core-fe";
 import { UserApi } from "../../api/UserApi";
 import { RootState } from "../../type/state";
 import { UserState } from "./type";
 
 const initialState: UserState = {
   currentUser: {
-      name: null,
-      mail: ''
+      name: '',
   },
 };
 class UserModule extends Module<RootState, "user", {}, {}>{
   *onEnter(){
     console.log('enter')
   }
+  @Log()
   *login(name: string, password: string): SagaGenerator {
-    const res = yield* call(UserApi.login, {name, password})
+    yield* call(UserApi.login, {name, password})
+    this.pushHistory('/')
   }
-  *register(): SagaGenerator{
-
+  *register(name: string, password: string): SagaGenerator{
+    const res = yield* call(UserApi.register, {name, password})
   }
 }
 const view = register(new UserModule('user', initialState))
