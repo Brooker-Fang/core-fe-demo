@@ -10,6 +10,10 @@ const initialState: ProductState = {
   detail: {}
 };
 class ProductModule extends Module<RootState, "product", {}, {}>{
+  override *onEnter(entryComponentProps: {}): SagaGenerator {
+    console.log("entry======", entryComponentProps);
+    yield* this.list();
+}
   @Loading(LOADING_PRODUCT_LIST)
   *list(search?:string, category?:string): SagaGenerator{
     try {
@@ -25,6 +29,12 @@ class ProductModule extends Module<RootState, "product", {}, {}>{
     try {
       yield* call(ProductApi.create, request)
       message.success(`产品添加成功`, 1)
+    } catch (error) {} 
+  }
+  *put(request: Product): SagaGenerator{
+    try {
+      yield* call(ProductApi.put, request)
+      message.success(`产品修改成功`, 1)
     } catch (error) {} 
   }
   *setList(list: Product[]) {

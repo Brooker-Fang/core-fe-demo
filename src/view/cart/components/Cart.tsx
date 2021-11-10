@@ -1,35 +1,40 @@
-import { Button, Col, Divider, Input, Row } from 'antd'
-import { ChangeEvent, useEffect, useState } from 'react'
-import { RootState } from '../../../type/state'
+import { Button, Col, Row } from 'antd'
+import { useMemo, useState } from 'react'
 import { CartItem } from '../type'
-import CartItemFc from './CartItemFc'
+import CartItemFc from './CartItem'
 import Layout from '../../components/Layout'
-import { TotalPrice } from './TotalPrice'
-import {connect, DispatchProp} from "react-redux";
-interface Props {
-  cartList: CartItem[]
-}
-const Cart = ({cartList}: Props) => {
-  const [cart, setCart] = useState<CartItem []>([])
-  const [totalPrice, setTotalPrice] = useState<number>(0)
+import { useDocumentTitle } from '../../../hooks/useDocumentTitle'
+import { getCart } from '../../../api/CartApi'
+import { useAuth } from '../../../hooks/useAuth'
+const Cart = () => {
+  const [cart, setCart] = useState<CartItem []>(getCart())
+  useAuth()
   const showCart = () => (
       <div >
         {
-          cartList.map(item => (
-            <CartItemFc setCart={setCart} product={item}></CartItemFc>
+          cart.map(item => (
+            <CartItemFc key={item._id} setCart={setCart} product={item}></CartItemFc>
           ))
         }
       </div>
   )
+  useDocumentTitle('购物车页面')
+  const getTotalPrice = useMemo(
+    (): string => {
+      return cart.reduce((currentValue, nextValue) => {
+        return nextValue.price? (currentValue += nextValue.price * nextValue.count) : currentValue
+      }, 0)
+      .toFixed(2)
+    },
+    [cart],
+  )
   return (
     <Layout title="购物车" subTitle="等待付款~">
       <Row gutter={16}>
-        {/* 购物车列表 */}
         <Col span="16">{showCart()}</Col>
         <Col span="8">
           <Row>
-            {/* 购物车总额 */}
-            <TotalPrice cart={cart} setTotalPrice={setTotalPrice}></TotalPrice>
+              商品总价：{getTotalPrice}
           </Row>
           <Row>
             <Button>提交订单</Button>
@@ -39,10 +44,6 @@ const Cart = ({cartList}: Props) => {
     </Layout>
   )
 }
-const mapStateToProps = (state: RootState): Props => {
-  return {
-      cartList: state.app.cart.cartList,
-  };
-};
 
-export default connect(mapStateToProps)(Cart);
+
+export default Cart;

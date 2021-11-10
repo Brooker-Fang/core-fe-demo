@@ -36,7 +36,9 @@ class UserModule extends Module<RootState, "user", {}, {}>{
       this.setState({
         currentUser: res
       })
-    } catch (error) {}
+    } catch (error) {
+      this.pushHistory('/login')
+    }
   }
 }
 const view = register(new UserModule('user', initialState))

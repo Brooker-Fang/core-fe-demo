@@ -1,4 +1,5 @@
 import { Category } from "../view/category/type";
+import { Order } from "../view/order/type";
 import { Product } from "../view/product/type";
 
 export interface UserResponse{
@@ -22,4 +23,7 @@ export interface ProductCreate {
 }
 export interface CategoryListResponse{
   list: Array<Category>
+}
+export interface OrderListResponse{
+  list: Array<Order>
 }

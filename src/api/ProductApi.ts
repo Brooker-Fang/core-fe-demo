@@ -7,8 +7,11 @@ export class ProductApi {
     return ajax("GET", "/ajax/product", {}, null);
   }
   static create(request: Product): Promise<ProductCreate> {
-      return ajax("GET", "/ajax/product/create", request, null);
+      return ajax("POST", "/ajax/product/create", request, null);
   }
+  static put(request: Product): Promise<ProductCreate> {
+    return ajax("PUT", "/ajax/product/create", request, null);
+}
   static get(id: string): Promise<Product> {
     return ajax("GET", "/ajax/product/:id", {id}, null);
   }

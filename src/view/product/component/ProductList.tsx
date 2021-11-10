@@ -3,9 +3,10 @@ import {showLoading} from "core-fe";
 import React, {FC, useCallback} from "react";
 import {connect, DispatchProp} from "react-redux";
 import { productActions } from "..";
+import { useDocumentTitle } from "../../../hooks/useDocumentTitle";
 import { RootState } from "../../../type/state";
 import {LOADING_PRODUCT_LIST, Product} from "../type";
-import { ProductItem } from "./ProductItem";
+import ProductItem from "./ProductItem";
 import { Search } from "./Search";
 
 interface StateProps {
@@ -22,6 +23,7 @@ export const ProductList:FC<Props> = ({list, showLoading, dispatch }: Props) => 
         },
         [dispatch],
     )
+    useDocumentTitle('产品页面')
     return (
             <Spin size="large" spinning={showLoading}>
                 <div>

@@ -1,5 +1,5 @@
 
-import {  Switch, Route } from 'react-router-dom'
+import {  Route } from 'react-router-dom'
 
 const Home = () => {
     return (

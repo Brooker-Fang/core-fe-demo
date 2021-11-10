@@ -1,13 +1,13 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 import { Button, Card, Col, Typography, Row } from 'antd'
 import { Link } from 'react-router-dom'
 import { Product } from '../type'
 import { addItem } from '../../../api/CartApi'
-const { Title, Paragraph } = Typography
+const { Title } = Typography
 interface Props{
   product: Product
 }
-export const ProductItem:FC<Props> = ({product}) => {
+ const ProductItem:FC<Props> = ({product}) => {
   const { name, description, price, category } = product
   const addToCart = () => {
     addItem(product)
@@ -27,7 +27,9 @@ export const ProductItem:FC<Props> = ({product}) => {
       actions={showButtons()}
     >
     <Title level={5}>{name}</Title>
-    <Paragraph ellipsis={{rows: 2}}>{description}</Paragraph>
+    <Row>
+      <Col span="12">描述：{description}</Col>
+    </Row>
     <Row>
       <Col span="12">价格：{price}</Col>
     </Row>
@@ -37,3 +39,4 @@ export const ProductItem:FC<Props> = ({product}) => {
   </Card>
   )
 }
+export default memo(ProductItem)
