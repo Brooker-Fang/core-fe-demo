@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { useForm } from 'antd/lib/form/Form'
 import { UserRequest } from '../../type/api'
 import { userActions } from '../user'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 const Item = Form.Item
 const Login= () => {
   const dispatch = useDispatch()
@@ -12,6 +13,7 @@ const Login= () => {
     const { name, password } = value
     dispatch(userActions.login(name, password))
   }
+  useDocumentTitle('登录页面')
   const [form] = useForm()
   const signinForm = () => {
     return (
@@ -20,9 +22,6 @@ const Login= () => {
           <Input></Input>
         </Item>
         <Item name="password" label="密码">
-          <Input></Input>
-        </Item>
-        <Item name="email" label="邮箱">
           <Input></Input>
         </Item>
         <Item>

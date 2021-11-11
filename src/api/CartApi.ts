@@ -2,6 +2,7 @@
  * 将商品添加到购物车
  */
 
+import { message } from "antd"
 import { CartItem } from "../view/cart/type"
 import { Product } from "../view/product/type"
 
@@ -21,7 +22,7 @@ import { Product } from "../view/product/type"
    }) as CartItem[]
  
    localStorage.setItem("cart", JSON.stringify(cart))
- 
+   message.success('添加成功')
    next && next()
  }
  
@@ -68,7 +69,7 @@ import { Product } from "../view/product/type"
       }
     })
     localStorage.setItem("cart", JSON.stringify(cart))
-  
+    message.success('删除成功')
    return cart
  }
  

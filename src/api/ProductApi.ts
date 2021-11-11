@@ -4,18 +4,18 @@ import { Product } from '../view/product/type';
 
 export class ProductApi {
   static list(request: ProductListRequest): Promise<ProductListResponse> {
-    return ajax("GET", "/ajax/product", {}, null);
+    return ajax("POST", "/ajax/product", {}, request);
   }
   static create(request: Product): Promise<ProductCreate> {
-      return ajax("POST", "/ajax/product/create", request, null);
+      return ajax("POST", "/ajax/product/create", {}, request);
   }
   static put(request: Product): Promise<ProductCreate> {
-    return ajax("PUT", "/ajax/product/create", request, null);
+    return ajax("PUT", "/ajax/product/create", {}, request);
 }
   static get(id: string): Promise<Product> {
-    return ajax("GET", "/ajax/product/:id", {id}, null);
+    return ajax("GET", "/ajax/product/:id", {id}, {});
   }
   static search(name: string): Promise<Product> {
-    return ajax("POST", "/ajax/product/search", {name}, null);
+    return ajax("POST", "/ajax/product/search", {}, {name});
   }
 }

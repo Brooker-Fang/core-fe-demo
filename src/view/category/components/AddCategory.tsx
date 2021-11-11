@@ -2,15 +2,18 @@ import { Button, Form, Input } from 'antd'
 import { useState } from 'react'
 import { categoryActions } from '..'
 import Layout from '../../components/Layout'
-import { DispatchProp} from "react-redux";
+import { DispatchProp, useDispatch} from "react-redux";
 interface Props extends DispatchProp{
   id?: string
   name?: string
 }
 const Item = Form.Item
-const AddCategory = ({id, name, dispatch}:Props) => {
+const AddCategory = ({id, name}:Props) => {
+  const dispatch = useDispatch()
   const [_name] = useState<string>(name || '')
   const onFinish = (val: { name: string}) => {
+    const { name } = val
+    debugger
     name && dispatch(categoryActions.created(name));
   }
   return (

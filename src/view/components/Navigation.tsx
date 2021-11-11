@@ -6,27 +6,33 @@ import { RootState } from '../../type/state'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { UserState } from '../user/type'
+import { useGetUser } from '../../hooks/useGetUser'
 interface Props {
   user: UserState
 } 
 const Navigation: React.FunctionComponent<Props> = ({user}: Props) => {
+  const loginUser = useGetUser()
   return (
     <Menu selectable={false} mode="horizontal">
       <Menu.Item key="home"  icon={<MailOutlined />}>
         <Link to="/">首页</Link>
       </Menu.Item>
-      <Menu.Item key="shop"  icon={<AppstoreOutlined />}>
-        <Link to="/shop">商城</Link>
-      </Menu.Item>
-      {!user && (
+      {!loginUser && (
         <>
           <Menu.Item key="login" icon={<MailOutlined />}>
             <Link to="/login">登录</Link>
           </Menu.Item>
+          <Menu.Item key="register"  icon={<AppstoreOutlined />}>
+            <Link to="/register">注册</Link>
+          </Menu.Item>
         </>
       )}
+      <Menu.Item key="admin"  icon={<AppstoreOutlined />}>
+        <Link to="/admin">后台</Link>
+      </Menu.Item>
       {
-        "欢迎" + user.currentUser?.name
+       loginUser && "欢迎" + loginUser.name
+       
       }
     </Menu>
   )

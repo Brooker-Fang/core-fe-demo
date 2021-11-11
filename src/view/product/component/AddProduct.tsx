@@ -6,6 +6,10 @@ import { CategoryState } from '../../category/type'
 import {connect, DispatchProp} from "react-redux";
 import { Product } from '../type'
 import { productActions } from '..'
+import { useDocumentTitle } from '../../../hooks/useDocumentTitle'
+import { useEffect } from 'react'
+import { categoryActions } from '../../category'
+import  fixedList from '../../category/data'
 const Item = Form.Item
 const { Option } = Select;
 interface StateProps {
@@ -14,7 +18,10 @@ interface StateProps {
 
 interface Props extends StateProps, DispatchProp {}
 const AddProducts = ({detail, dispatch}: Props) => {
-  const { list : categoryList } = useSelector<RootState, CategoryState>(state => state.app.category)
+  let { list : categoryList } = useSelector<RootState, CategoryState>(state => state.app.category)
+  if(!categoryList.length) {
+    categoryList = fixedList
+  }
   const onFinish = (product: Product) => {
     if(detail._id) {
       dispatch(productActions.put(product))
@@ -22,6 +29,7 @@ const AddProducts = ({detail, dispatch}: Props) => {
       dispatch(productActions.create(product))
     }
   }
+  useDocumentTitle(`${detail._id ? '编辑' : '添加'}商品`)
   const addProductForm = () => {
     return (
       <Form initialValues={{...detail}} onFinish={onFinish}>

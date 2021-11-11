@@ -7,6 +7,6 @@ export class CategoryApi {
     return ajax("GET", "/ajax/product", {}, null);
   }
   static create(name: string): Promise<Category> {
-      return ajax("GET", "/ajax/product/create", {name}, null);
+      return ajax("GET", "/ajax/product/create", {}, {name});
   }
 }
