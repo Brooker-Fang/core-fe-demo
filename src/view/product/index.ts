@@ -6,7 +6,6 @@ import { Product, ProductState } from "./type";
 import { LOADING_PRODUCT_LIST } from "./type";
 import ProductListComponent from './component/ProductList'
 import  productListData  from "./data";
-import { categoryActions } from "../category";
 const initialState: ProductState = {
   list: [],
   detail: {}
@@ -38,32 +37,42 @@ class ProductModule extends Module<RootState, "product", {}, {}>{
         if(search) {
           list = list.filter(item => (item.name as string).indexOf(search) !== -1)
         }
-        if(category) {
+        if(category && category !== 'All') {
           list = list.filter(item => (item.category?._id as string) === category)
         }
       }
+      console.log(list, productListData)
       this.setState({
         list
       })
+      yield* call(ProductApi.list, {search, category})
     } catch (error) {}
   }
   *create(request: Product): SagaGenerator{
     try {
+      
       yield* call(ProductApi.create, request)
       message.success(`产品添加成功`, 1)
     } catch (error) {
-      let list = productListData
+      
+      let list = [...productListData]
       request._id = list.length + ''
-      list[list.length] = request
+      list.push(request)
+      this.setState({
+        list
+      })
       message.success(`产品添加成功`, 1)
-      yield* this.pushHistory('/admin')
+      yield* this.pushHistory('/admin/product')
     } 
   }
   *put(request: Product): SagaGenerator{
     try {
       yield* call(ProductApi.put, request)
       message.success(`产品修改成功`, 1)
-    } catch (error) {} 
+    } catch (error) {
+      message.success(`产品修改成功`, 1)
+      yield* this.pushHistory('/admin/product')
+    } 
   }
   *get(request: Product): SagaGenerator{
     try {

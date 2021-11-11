@@ -7,9 +7,9 @@ import {connect, DispatchProp} from "react-redux";
 import { Product } from '../type'
 import { productActions } from '..'
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle'
-import { useEffect } from 'react'
-import { categoryActions } from '../../category'
 import  fixedList from '../../category/data'
+import { useParams } from 'react-router'
+import productListData from '../data'
 const Item = Form.Item
 const { Option } = Select;
 interface StateProps {
@@ -18,21 +18,26 @@ interface StateProps {
 
 interface Props extends StateProps, DispatchProp {}
 const AddProducts = ({detail, dispatch}: Props) => {
+  const params  = useParams()
+  const productId = (params as {productId: string}).productId
+  const product = productListData.find(item => item._id === productId) as Product
+  console.log(product)
+  const { name, description, price, category} = product || {}
   let { list : categoryList } = useSelector<RootState, CategoryState>(state => state.app.category)
   if(!categoryList.length) {
     categoryList = fixedList
   }
   const onFinish = (product: Product) => {
-    if(detail._id) {
+    if(productId) {
       dispatch(productActions.put(product))
     } else {
       dispatch(productActions.create(product))
     }
   }
-  useDocumentTitle(`${detail._id ? '编辑' : '添加'}商品`)
+  useDocumentTitle(`${productId ? '编辑' : '添加'}商品`)
   const addProductForm = () => {
     return (
-      <Form initialValues={{...detail}} onFinish={onFinish}>
+      <Form initialValues={{name, description, price, category: category?._id}} onFinish={onFinish}>
         <Item name="name" label="商品名称">
           <Input></Input>
         </Item>
@@ -47,7 +52,7 @@ const AddProducts = ({detail, dispatch}: Props) => {
             <Option value="">请选择分类</Option>
             {
             categoryList.map(item => {
-              return <Select.Option key={item._id} value={item._id}>
+              return <Select.Option key={item._id} value={item._id as string}>
               {item.name}
             </Select.Option>
             })
@@ -56,14 +61,14 @@ const AddProducts = ({detail, dispatch}: Props) => {
         </Item>
         <Item >
           <Button type="primary" htmlType="submit">
-            添加商品
+          {(productId ? "编辑": "添加")}商品
           </Button>
         </Item>
       </Form>
     )
   }
   return (
-    <Layout title={(detail._id ? "编辑": "添加") + "商品"} subTitle="">
+    <Layout title={(productId ? "编辑": "添加") + "商品"} subTitle="">
       {addProductForm()}
     </Layout>
   )

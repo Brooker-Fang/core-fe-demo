@@ -8,13 +8,11 @@ import { productActions } from '..'
 import { useDebounceValue } from '../../../hooks/useDebounce'
 import { RootState } from '../../../type/state'
 import { CategoryState } from '../../category/type'
-import { ProductState } from '../type'
 interface Props {
   searchProduct?: (search: string, category: string) => void
 }
 export const Search = ({searchProduct}: Props) => {
-  // const { list : categoryList } = useSelector<RootState, CategoryState>(state => state.app.category)
-  const { list : categoryList } = useSelector<RootState, ProductState>(state => state.app.product)
+  const { list : categoryList } = useSelector<RootState, CategoryState>(state => state.app.category)
   const [search, setSearch] = useState<string>('')
   const [category, setCategory] = useState<string>('')
   const handleSelectChange = useCallback(

@@ -1,6 +1,5 @@
 import React, { FC, memo, useCallback } from 'react'
 import { Button, Card, Typography, Row } from 'antd'
-import { Link } from 'react-router-dom'
 import { Product } from '../type'
 import { addItem } from '../../../api/CartApi'
 import { useDispatch} from "react-redux";

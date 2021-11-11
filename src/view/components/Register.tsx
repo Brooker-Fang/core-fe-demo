@@ -7,6 +7,7 @@ import { RootState } from '../../type/state'
 import { UserState } from '../user/type'
 import { userActions } from '../user'
 import { UserRequest } from '../../type/api'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 
 
 const Item = Form.Item
@@ -16,6 +17,7 @@ const Register = () => {
   // 获取注册结果
   const auth = useSelector<RootState, UserState>(state => state.app.user)
   const currentUser = auth.currentUser
+  useDocumentTitle("注册页面")
   const onFinish = (value: UserRequest) => {
     const { name, password } = value
     setRegisted(true)

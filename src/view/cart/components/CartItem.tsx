@@ -5,24 +5,24 @@ import { deleteItem, updateItem } from '../../../api/CartApi'
 const { Title } = Typography
 interface Props {
   product: CartItem,
-  setCart: (arg: CartItem[]) => void
+  setCart?: (arg: CartItem[]) => void
 }
 const CartItemFc:FC<Props> = ({ product, setCart }) => {
   const { _id ,name, price, category, description, count:productCount} = product
   const [count, setCount] = useState<number>(productCount)
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     let count = parseInt(event.target.value)
-    setCart(updateItem(product._id!, count))
+    setCart && setCart(updateItem(product._id!, count))
     setCount(count)
   }
-  const showButtons = () => {
+  const showButtons = setCart ? () => {
     let buttonArray = []
     buttonArray.push(<Input type="number" value={count} onChange={handleChange}></Input>)
       buttonArray.push(<Button onClick={() => setCart(deleteItem(_id!))} danger type="primary">
       删除
     </Button>)
     return buttonArray
-  }
+  } : () => []
   return (
     <Card
         actions={showButtons()}

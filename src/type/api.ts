@@ -1,10 +1,10 @@
+import { CartItem } from "../view/cart/type";
 import { Category } from "../view/category/type";
 import { Order } from "../view/order/type";
 import { Product } from "../view/product/type";
 
 export interface UserResponse{
     name: string
-    mail: string
   }
 export interface UserRequest {
   name: string
@@ -26,4 +26,12 @@ export interface CategoryListResponse{
 }
 export interface OrderListResponse{
   list: Array<Order>
+}
+export interface OrderCreateResponse{
+  orderId: string
+}
+export interface OrderDetailResponse{
+  _id: string,
+  list: CartItem[],
+  totalPrice: number
 }

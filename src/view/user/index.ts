@@ -7,9 +7,6 @@ const initialState: UserState = {
   currentUser: null
 };
 class UserModule extends Module<RootState, "user", {}, {}>{
-  *onEnter(){
-    console.log('enter')
-  }
   @Log()
   *login(name: string, password: string): SagaGenerator {
     try {

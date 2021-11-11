@@ -1,22 +1,30 @@
 import { Col, Descriptions, Menu, Row, Typography } from 'antd'
-import { ShoppingCartOutlined, UserOutlined, OrderedListOutlined } from '@ant-design/icons'
+import { ShoppingCartOutlined, UserOutlined, OrderedListOutlined , PlusSquareOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import Layout from './Layout'
 import { useGetUser } from '../../hooks/useGetUser'
 const { Title } = Typography
 const AdminDashboard = () => {
-  const { name } = useGetUser()
+  const { name } = useGetUser() || {name: ''}
   const adminLinks = () => (
     <>
     <Title level={5}>管理员链接</Title>
     <Menu>
+    <Menu.Item key="/admin/product">
+        <UserOutlined></UserOutlined>
+        <Link to="/admin/product">产品列表</Link>
+      </Menu.Item>
       <Menu.Item key="/category/create">
-        <ShoppingCartOutlined></ShoppingCartOutlined>
+      <PlusSquareOutlined />
         <Link to="/create/category">添加分类</Link>
       </Menu.Item>
       <Menu.Item key="/create/product">
         <UserOutlined></UserOutlined>
         <Link to="/create/product">添加产品</Link>
+      </Menu.Item>
+      <Menu.Item key="/cart">
+      <ShoppingCartOutlined />
+        <Link to="/cart">购物车</Link>
       </Menu.Item>
       <Menu.Item key="/order">
         <OrderedListOutlined></OrderedListOutlined>

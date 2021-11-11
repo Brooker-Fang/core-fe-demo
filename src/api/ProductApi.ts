@@ -10,7 +10,7 @@ export class ProductApi {
       return ajax("POST", "/ajax/product/create", {}, request);
   }
   static put(request: Product): Promise<ProductCreate> {
-    return ajax("PUT", "/ajax/product/create", {}, request);
+    return ajax("PUT", "/ajax/product/put", {}, request);
 }
   static get(id: string): Promise<Product> {
     return ajax("GET", "/ajax/product/:id", {id}, {});
